@@ -145,7 +145,22 @@ def home():
     user_predictions = session.get('predictions', [])
     favorite_recipes = session.get('favorite_recipes', [])
 
+
+    session_predictions = session.get('predictions', [])
+    displayed_predictions = session_predictions[:6]  # Limit to first 6 predictions
+
+
     return render_template('index.html', predictions=user_predictions, favorite_recipes=favorite_recipes)
+
+
+@app.route('/all_predictions')
+def all_predictions():
+    if 'username' not in session:
+        return redirect('/login')  # Redirect to login if not logged in
+
+    session_predictions = session.get('predictions', [])
+
+    return render_template('all_predictions.html', predictions=session_predictions)
 
 
 @app.route('/register', methods=['GET', 'POST'])

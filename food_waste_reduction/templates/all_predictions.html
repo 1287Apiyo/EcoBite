@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Predictions</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>All Predictions</h1>
+        </header>
+        <div id="predictions-list">
+            {% if predictions %}
+                <ul>
+                    {% for pred in predictions %}
+                        <li>
+                            <h3>{{ pred.name }} (Confidence: {{ pred.probability }}%)</h3>
+                            <p>Expiration: {{ pred.expiration }} days</p>
+                            <p>Nutritional Information: 
+                                <br>Calories: {{ pred.nutrition.calories }} kcal
+                                <br>Protein: {{ pred.nutrition.protein }} g
+                                <br>Carbs: {{ pred.nutrition.carbs }} g
+                                <br>Fat: {{ pred.nutrition.fat }} g
+                            </p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No predictions available.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

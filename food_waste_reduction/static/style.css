@@ -297,3 +297,24 @@ li {
     display: flex; /* Flexbox for layout */
     flex-direction: column; /* Stack contents vertically */
 }
+.view-all-container {
+    text-align: center;  /* Center the button */
+    margin-top: 20px;   /* Add space above the button */
+}
+
+.view-all-button {
+    display: inline-block;  /* Make the link behave like a button */
+    background-color: #FFA500;  /* Orange background color */
+    color: white;  /* White text color */
+    padding: 15px 30px;  /* Add padding for size */
+    text-align: center;  /* Center text inside the button */
+    text-decoration: none;  /* Remove underline */
+    border-radius: 5px;  /* Rounded corners */
+    width: 100%;  /* Full width */
+    max-width: 300px; /* Optional: limit the button's width */
+    font-size: 16px;  /* Increase font size */
+}
+
+.view-all-button:hover {
+    background-color: #FF8C00;  /* Darker orange on hover */
+}

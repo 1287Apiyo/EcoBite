@@ -49,7 +49,7 @@
         <div id="userStats">
             {% if predictions %}
                 <ul>
-                    {% for pred in predictions %}
+                    {% for pred in predictions[:6] %}  <!-- Display only the first 6 predictions -->
                         <li>
                             <h3>{{ pred.name }} (Confidence: {{ pred.probability }}%)</h3>
                             <p>Expiration: {{ pred.expiration }} days</p>
@@ -70,6 +70,12 @@
                         </li>
                     {% endfor %}
                 </ul>
+                <div class="view-all-container">
+                    {% if predictions|length > 6 %}  <!-- Check if there are more than 6 predictions -->
+                        <a href="{{ url_for('all_predictions') }}" class="view-all-button">View all predictions</a>
+                    {% endif %}
+                </div>
+                
             {% else %}
                 <p>No predictions yet. Upload an image to get started!</p>
             {% endif %}
