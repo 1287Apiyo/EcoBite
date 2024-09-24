@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipes - Food Expiration Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Recipes</h1>
+        <div class="nav-link">
+            <a href="{{ url_for('home') }}" class="nav-link">Home</a>
+
+            <a href="{{ url_for('dashboard') }}" class="nav-link">Dashboard</a>
+            <a href="{{ url_for('recipes_page') }}" class="nav-link">Recipes</a>
+            <a href="{{ url_for('tips') }}" class="nav-link">Tips</a>
+            <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+        </div>
+    </header>
+
+    <main>
+        <h2>Recipes</h2>
+        <ul>
+            {% for recipe in recipes %}
+                <li>
+                    <strong>{{ recipe.name }}</strong>: {{ recipe.description }}<br>
+                    <em>Ingredients:</em> {{ recipe.ingredients }}<br>
+                    <em>Preparation Time:</em> {{ recipe.prep_time }}<br>
+                    <em>Instructions:</em> {{ recipe.instructions }}
+                </li>
+            {% endfor %}
+        </ul>
+        {% if not recipes %}
+            <p>No recipes available at this time.</p>
+        {% endif %}
+    </main>
+
+    <footer>
+        <p>&copy; {{ current_year }} Food Expiration Tracker</p>
+    </footer>
+</body>
+</html>

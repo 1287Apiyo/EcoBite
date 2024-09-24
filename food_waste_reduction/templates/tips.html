@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tips - Food Expiration Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+    <header>
+        <h1>Tips to Reduce Food Waste</h1>
+        <div class="nav-link">
+            <a href="{{ url_for('home') }}" class="nav-link">Home</a>
+
+            <a href="{{ url_for('dashboard') }}" class="nav-link">Dashboard</a>
+            <a href="{{ url_for('recipes_page') }}" class="nav-link">Recipes</a>
+            <a href="{{ url_for('tips') }}" class="nav-link">Tips</a>
+            <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+    </header>
+    <main>
+        <h2>Food Waste Tips</h2>
+        <ul>
+            <li>Plan Your Meals: Before grocery shopping, plan your meals for the week. Create a shopping list based on your meal plan to avoid buying unnecessary items.</li>
+            <li>Check Your Pantry and Fridge: Before you shop, take inventory of what you already have. Use ingredients that are nearing their expiration dates first.</li>
+            <li>Store Food Properly: Different foods have different storage needs. Learn how to store fruits, vegetables, and leftovers correctly to extend their shelf life.</li>
+            <li>Use Clear Containers: Store food in clear containers so you can easily see what you have. This reduces the chance of forgetting about food that’s about to expire.</li>
+            <li>Understand Expiration Dates: Learn the difference between “best by,” “sell by,” and “use by” dates. Many foods are still safe to eat after these dates.</li>
+            <li>Freeze Surplus Food: If you have food that you won’t be able to eat in time, consider freezing it. Many fruits, vegetables, and leftovers can be safely frozen.</li>
+            <li>Incorporate Leftovers: Get creative with your leftovers. Transform them into new meals or use them in soups, stews, or stir-fries.</li>
+            <li>Share with Friends and Neighbors: If you have excess food that you won’t be able to eat, consider sharing it with friends, family, or neighbors.</li>
+            <li>Compost Food Scraps: Instead of throwing away food scraps, compost them. This not only reduces waste but also enriches your garden soil.</li>
+            <li>Educate Yourself on Portion Sizes: Be mindful of how much food you prepare or order. Knowing portion sizes can help you avoid cooking or buying too much.</li>
+            <li>Repurpose Wilting Vegetables: Use wilting vegetables in stocks, soups, or smoothies instead of discarding them.</li>
+            <li>Cook in Batches: Prepare meals in larger quantities and freeze portions for later. This reduces the likelihood of cooking more food than necessary.</li>
+            <li>Use Produce Before It Spoils: Make a habit of checking your fridge regularly and use fruits and vegetables before they spoil.</li>
+            <li>Join a Food Share Program: Participate in local food share or community garden programs to share excess produce and reduce waste.</li>
+            <li>Get Creative with Scraps: Use vegetable scraps (like onion peels, carrot tops, and celery leaves) to make homemade vegetable broth.</li>
+        </ul>
+    </main>
+    
+    <footer>
+        <p>&copy; {{ current_year }} Food Expiration Tracker</p>
+    </footer>
+</body>
+</html>

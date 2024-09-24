@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Waste Reduction - Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav>
+                <div class="nav-container">
+                    <div class="logo">
+                        <h1>EcoBite</h1>
+                        {% if 'username' in session %}
+                            <span id="welcome-message">Welcome, {{ session['username'] }}!</span>
+                        {% endif %}
+                    </div>
+                    <div class="nav-links">
+                        {% if 'username' not in session %}
+                            <a href="{{ url_for('login') }}" class="nav-link">Login</a>
+                            <a href="{{ url_for('register') }}" class="nav-link">Register</a>
+                        {% else %}
+                            <a href="{{ url_for('dashboard') }}" class="nav-link">Dashboard</a>
+                            <a href="{{ url_for('recipes_page') }}" class="nav-link">Recipes</a>
+                            <a href="{{ url_for('tips') }}" class="nav-link">Tips</a>
+                            <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </nav>
+            
+            <h2>AI-Powered Food Waste Reduction System</h2>
+        </header>
+
+        <!-- Section for uploading images and displaying predictions -->
+        <form id="uploadForm" action="/predict" method="post" enctype="multipart/form-data">
+            <label for="image">Upload an image of food:</label>
+            <input type="file" id="image" name="image" accept="image/*" required>
+            <button type="submit">Predict</button>
+        </form>
+
+        <div id="loading" class="hidden">Processing your image, please wait...</div>
+        <div id="result"></div>
+
+        <!-- Display User Stats: Predicted Items, Expiration Dates, and Recipes -->
+        <h2>Your Predicted Food Items</h2>
+        <div id="userStats">
+            {% if predictions %}
+                <ul>
+                    {% for pred in predictions %}
+                        <li>
+                            <h3>{{ pred.name }} (Confidence: {{ pred.probability }}%)</h3>
+                            <p>Expiration: {{ pred.expiration }} days</p>
+                            <p>Nutritional Information: 
+                                <br>Calories: {{ pred.nutrition.calories }} kcal
+                                <br>Protein: {{ pred.nutrition.protein }} g
+                                <br>Carbs: {{ pred.nutrition.carbs }} g
+                                <br>Fat: {{ pred.nutrition.fat }} g
+                            </p>
+                            {% if pred.recipes %}
+                                <p>Suggested Recipes:</p>
+                                <ul>
+                                    {% for recipe in pred.recipes %}
+                                        <li><a href="{{ recipe.url }}" target="_blank">{{ recipe.name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No predictions yet. Upload an image to get started!</p>
+            {% endif %}
+        </div>
+
+        <!-- Display User-Specific Activity: Recent Uploads and Favorite Recipes -->
+        <h2>Your Activity</h2>
+        <div id="userActivity">
+            <h3>Recent Food Uploads</h3>
+            {% if recent_uploads %}
+                <ul>
+                    {% for upload in recent_uploads %}
+                        <li>{{ upload.name }} (Uploaded on: {{ upload.upload_date }})</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No recent uploads. Start by uploading a food item!</p>
+            {% endif %}
+
+            <h3>Your Favorite Recipes</h3>
+            {% if favorite_recipes %}
+                <ul>
+                    {% for recipe in favorite_recipes %}
+                        <li><a href="{{ recipe.url }}" target="_blank">{{ recipe.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No saved recipes yet. Browse predictions to find and save your favorites!</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Food Waste Reduction System</p>
+    </footer>
+    <script>
+        const form = document.getElementById('uploadForm');
+        const loadingDiv = document.getElementById('loading');
+        const resultDiv = document.getElementById('result');
+    
+        form.onsubmit = async (event) => {
+            event.preventDefault();
+            loadingDiv.classList.remove('hidden');
+            resultDiv.innerHTML = '';
+    
+            const formData = new FormData(form);
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    body: formData
+                });
+    
+                if (!response.ok) {
+                    const error = await response.json();
+                    alert('Error: ' + (error.error || 'Something went wrong.'));
+                    loadingDiv.classList.add('hidden');
+                    return; // Exit early
+                }
+    
+                const result = await response.json();
+                console.log('Predictions received:', result);
+    
+                // Process and display results
+                result.forEach(pred => {
+                    resultDiv.innerHTML += `<div class="result-item">
+                        <h3>${pred.name}: ${pred.probability.toFixed(2)}%</h3>
+                        <p>Expiration: ${pred.expiration} days</p>
+                        <p>Nutritional Information: 
+                            <br>Calories: ${pred.nutrition.calories}
+                            <br>Protein: ${pred.nutrition.protein}g
+                            <br>Carbs: ${pred.nutrition.carbs}g
+                            <br>Fat: ${pred.nutrition.fat}g
+                        </p>`;
+                    
+                    if (pred.recipes.length > 0) {
+                        resultDiv.innerHTML += `<p>Suggested Recipes:</p><ul>`;
+                        pred.recipes.forEach(recipe => {
+                            resultDiv.innerHTML += `<li><a href="${recipe.url}" target="_blank">${recipe.name}</a></li>`;
+                        });
+                        resultDiv.innerHTML += `</ul>`;
+                    }
+                    resultDiv.innerHTML += `</div>`;
+                });
+            } catch (error) {
+                console.error('Error during fetch:', error);
+                alert('An error occurred during submission. Please try again.');
+            } finally {
+                loadingDiv.classList.add('hidden');
+            }
+        };
+    </script>
+    
+</body>
+</html>
