@@ -60,12 +60,15 @@
                                 <br>Fat: {{ pred.nutrition.fat }} g
                             </p>
                             {% if pred.recipes %}
+                            <div class="suggested-recipes">
                                 <p>Suggested Recipes:</p>
                                 <ul>
                                     {% for recipe in pred.recipes %}
                                         <li><a href="{{ recipe.url }}" target="_blank">{{ recipe.name }}</a></li>
                                     {% endfor %}
                                 </ul>
+                            </div>
+                            
                             {% endif %}
                         </li>
                     {% endfor %}

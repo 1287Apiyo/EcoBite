@@ -318,3 +318,41 @@ li {
 .view-all-button:hover {
     background-color: #FF8C00;  /* Darker orange on hover */
 }
+.suggested-recipes {
+    background-color: #F9F9F9; /* Light background for the recipe section */
+    padding: 20px; /* Padding around the section */
+    border-radius: 8px; /* Rounded corners for the section */
+    margin: 20px 0; /* Space above and below the section */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.suggested-recipes p {
+    font-size: 1.2em; /* Larger font for the heading */
+    margin-bottom: 10px; /* Space below the heading */
+    font-weight: bold; /* Bold text for emphasis */
+}
+
+.suggested-recipes ul {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0; /* Remove padding */
+}
+
+.suggested-recipes li {
+    margin: 10px 0; /* Space between items */
+}
+
+.suggested-recipes a {
+    text-decoration: none; /* Remove underline from links */
+    color: #FF673AB7; /* Link color */
+    font-weight: bold; /* Bold text for links */
+    padding: 10px 15px; /* Padding around the link */
+    border-radius: 5px; /* Rounded corners for links */
+    background-color: #34495E; /* Background for links */
+    display: inline-block; /* Make links behave like block elements */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transitions */
+}
+
+.suggested-recipes a:hover {
+    background-color: #FF673AB7; /* Change background on hover */
+    color: white; /* Change text color on hover */
+}

@@ -7,6 +7,7 @@ import numpy as np
 import sys
 import io
 import json
+
 from datetime import datetime  # Import datetime
 # Force Python to use UTF-8 encoding for stdout
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
@@ -20,6 +21,10 @@ app.config['MAX_USAGE'] = 2  # Set maximum allowed uses
 
 # Load a pre-trained MobileNetV2 model
 model = MobileNetV2(weights='imagenet')
+
+def is_food_label(label):
+    """Check if the label is related to food"""
+    return any(food in label for food in food_labels)
 
 # Sample expiration dates in days
 expiration_dates = {
@@ -37,6 +42,60 @@ expiration_dates = {
     'potato': 14,          # Added potato
     'onion': 30,           # Added onion
     'tomato': 5,           # Added tomato
+    'ugali': 3,                 # Ugali (cornmeal)
+    'collard greens': 3,        # Sukuma Wiki (collard greens)
+    'githeri': 5,               # Githeri (maize and beans mix)
+    'grilled meat': 2,          # Nyama Choma (grilled meat)
+    'mandazi': 3,               # Mandazi (fried dough)
+    'chapati': 3,               # Chapati (flatbread)
+    'green grams': 4,           # Ndengu (green grams)
+    'small dried fish': 7,      # Omena (small dried fish)
+    'plantain': 7,              # Matoke (green bananas)
+    'mashed potatoes with greens': 4,  # Mokimo (mashed potatoes with greens)
+    'pilau': 2,                 # Pilau (spiced rice and meat)
+    'chicken': 2,               # Kuku (chicken)
+    'tilapia': 2,               # Tilapia fish (fresh)
+    'mukimo': 3,                # Mukimo (mashed peas, potatoes, and greens)
+    'beef stew': 3,             # Beef stew
+    'dry maize flour': 30,      # Ugali mix (dry flour)
+    'arrowroot': 5,             # Nduma (arrowroot)
+    'dry maize': 30,            # Mahindi (dry maize)
+    'millet porridge': 3,       # Wimbi porridge
+    'cassava': 5,               # Muhogo (cassava)
+    'tripe': 1,                 # Matumbo (tripe)
+    'traditional chicken': 2,   # Kienyeji chicken (traditional chicken)
+    'traditional greens': 3,    # Mboga Kienyeji (traditional greens)
+    'fish stew': 2,             # Fish stew
+    'bean stew': 4,             # Bean stew
+    'millet ugali': 5,          # Ugali made from millet flour
+    'arrowroots': 7,            # Nduma (arrowroots)
+    'potatoes': 14,             # Waru (potatoes)
+    'samosa': 2,                # Samosa (fried meat/veg pastry)
+    'potato fritters': 2,       # Bhajia (spiced potato fritters)
+    'Kenyan sausage': 1,        # Mutura (Kenyan sausage)
+    'mashed peas and corn': 3,  # Irio (mashed peas, potatoes, and corn)
+    'coconut rice': 2,          # Coconut rice
+    'pigeon peas': 4,           # Mbaazi (pigeon peas)
+    'cowpeas leaves': 3,        # Kunde (cowpeas leaves)
+    'lamb stew': 3,             # Lamb stew
+    'lentil stew': 4,  
+    'mashed_potato':3,         # Kamande (lentil stew)
+    
+    # Adding fruits at the end
+    'banana': 7,
+    'apple': 28,
+    'mango': 5,
+    'pineapple': 5,
+    'avocado': 4,
+    'papaya': 4,
+    'watermelon': 7,
+    'passion fruit': 7,
+    'guava': 5,
+    'oranges': 14,
+    'lemon': 30,
+    'tangerine': 14,
+    'kiwi': 10,
+
 }
 
 def predict_expiration(food_name):
@@ -45,61 +104,147 @@ def predict_expiration(food_name):
 # Sample recipes with URLs
 recipes ={
     "banana": [
-        {"name": "Banana Bread", "url": "https://www.allrecipes.com/recipe/20144/banana-banana-bread/"},
-        {"name": "Banana Smoothie", "url": "https://www.allrecipes.com/recipe/220476/banana-smoothie/"}
+        {"name": "Banana Bread", "url": "https://www.allrecipes.com"},
+        {"name": "Banana Smoothie", "url": "https://www.allrecipes.com"}
     ],
     "apple": [
-        {"name": "Apple Pie", "url": "https://www.allrecipes.com/recipe/12688/apple-pie-by-grandma-ople/"},
-        {"name": "Apple Crisp", "url": "https://www.allrecipes.com/recipe/12682/apple-crisp/"}
+        {"name": "Apple Pie", "url": "https://www.allrecipes.com"},
+        {"name": "Apple Crisp", "url": "https://www.allrecipes.com"}
     ],
     "chicken": [
-        {"name": "Grilled Chicken", "url": "https://www.allrecipes.com/recipe/83711/grilled-chicken-breasts/"},
-        {"name": "Chicken Soup", "url": "https://www.allrecipes.com/recipe/15028/chicken-soup/"}
+        {"name": "Grilled Chicken", "url": "https://www.allrecipes.com"},
+        {"name": "Chicken Soup", "url": "https://www.allrecipes.com"}
     ],
     "milk": [
-        {"name": "Pancakes", "url": "https://www.allrecipes.com/recipe/21014/good-old-fashioned-pancakes/"},
-        {"name": "Milkshake", "url": "https://www.allrecipes.com/recipe/21183/milkshake/"}
+        {"name": "Pancakes", "url": "https://www.allrecipes.com"},
+        {"name": "Milkshake", "url": "https://www.allrecipes.com"}
     ],
     "bread": [
-        {"name": "Toast", "url": "https://www.allrecipes.com/recipe/21412/bread/"},
-        {"name": "Sandwich", "url": "https://www.allrecipes.com/recipe/65934/sandwich-bread/"}
+        {"name": "Toast", "url": "https://www.allrecipes.com"},
+        {"name": "Sandwich", "url": "https://www.allrecipes.com"}
     ],
     "egg": [
-        {"name": "Scrambled Eggs", "url": "https://www.allrecipes.com/recipe/222609/simple-scrambled-eggs/"},
-        {"name": "Omelette", "url": "https://www.allrecipes.com/recipe/222616/simple-omelet/"}
+        {"name": "Scrambled Eggs", "url": "https://www.allrecipes.com"},
+        {"name": "Omelette", "url": "https://www.allrecipes.com"}
     ],
     "pizza": [
-        {"name": "Pizza Casserole", "url": "https://www.allrecipes.com/recipe/83506/pizza-casserole/"},
-        {"name": "Pizza Salad", "url": "https://www.allrecipes.com/recipe/228093/pizza-salad/"}
+        {"name": "Pizza Casserole", "url": "https://www.allrecipes.com"},
+        {"name": "Pizza Salad", "url": "https://www.allrecipes.com"}
     ],
     "trifle": [
-        {"name": "Fruit Trifle", "url": "https://www.allrecipes.com/recipe/75138/fruit-trifle/"},
-        {"name": "Chocolate Trifle", "url": "https://www.allrecipes.com/recipe/19099/chocolate-trifle/"}
+        {"name": "Fruit Trifle", "url": "https://www.allrecipes.com"},
+        {"name": "Chocolate Trifle", "url": "https://www.allrecipes.com"}
     ],
     "zucchini": [
-        {"name": "Zucchini Bread", "url": "https://www.allrecipes.com/recipe/20144/zucchini-bread/"},
-        {"name": "Stuffed Zucchini", "url": "https://www.allrecipes.com/recipe/21734/stuffed-zucchini/"}
+        {"name": "Zucchini Bread", "url": "https://www.allrecipes.com"},
+        {"name": "Stuffed Zucchini", "url": "https://www.allrecipes.com"}
     ],
     "carrot": [
-        {"name": "Carrot Cake", "url": "https://www.allrecipes.com/recipe/17481/carrot-cake/"},
-        {"name": "Carrot Soup", "url": "https://www.allrecipes.com/recipe/10336/carrot-soup/"}
+        {"name": "Carrot Cake", "url": "https://www.allrecipes.com"},
+        {"name": "Carrot Soup", "url": "https://www.allrecipes.com"}
     ],
     "grapes": [
-        {"name": "Grape Salad", "url": "https://www.allrecipes.com/recipe/216134/grape-salad/"},
-        {"name": "Frozen Grapes", "url": "https://www.allrecipes.com/recipe/222121/frozen-grapes/"}
+        {"name": "Grape Salad", "url": "https://www.allrecipes.com"},
+        {"name": "Frozen Grapes", "url": "https://www.allrecipes.com"}
     ],
     "potato": [
-        {"name": "Mashed Potatoes", "url": "https://www.allrecipes.com/recipe/23518/mashed-potatoes/"},
-        {"name": "Potato Wedges", "url": "https://www.allrecipes.com/recipe/15100/potato-wedges/"}
+        {"name": "Mashed Potatoes", "url": "https://www.allrecipes.com"},
+        {"name": "Potato Wedges", "url": "https://www.allrecipes.com"}
     ],
     "onion": [
-        {"name": "French Onion Soup", "url": "https://www.allrecipes.com/recipe/21735/french-onion-soup/"},
-        {"name": "Caramelized Onions", "url": "https://www.allrecipes.com/recipe/24443/caramelized-onions/"}
+        {"name": "French Onion Soup", "url": "https://www.allrecipes.com"},
+        {"name": "Caramelized Onions", "url": "https://www.allrecipes.com"}
     ],
     "tomato": [
-        {"name": "Tomato Sauce", "url": "https://www.allrecipes.com/recipe/21014/tomato-sauce/"},
-        {"name": "Caprese Salad", "url": "https://www.allrecipes.com/recipe/23969/caprese-salad/"}
-    ]
+        {"name": "Tomato Sauce", "url": "https://www.allrecipes.com"},
+        {"name": "Caprese Salad", "url": "https://www.allrecipes.com"}
+    ],
+    "ugali": [
+        {"name": "Traditional Ugali", "url": "https://www.allrecipes.com"},
+        {"name": "Ugali with Sukuma Wiki", "url": "https://www.allrecipes.com"}
+    ],
+    "collard greens": [
+        {"name": "Sukuma Wiki Recipe", "url": "https://www.allrecipes.com"},
+        {"name": "Collard Greens with Tomatoes", "url": "https://www.allrecipes.com"}
+    ],
+    "githeri": [
+        {"name": "Githeri Recipe", "url": "https://www.allrecipes.com"},
+        {"name": "Githeri with Avocado", "url": "https://www.allrecipes.com"}
+    ],
+    "grilled meat": [
+        {"name": "Nyama Choma", "url": "https://www.allrecipes.com"},
+        {"name": "Nyama Choma with Kachumbari", "url": "https://www.allrecipes.com"}
+    ],
+    "mandazi": [
+        {"name": "Soft Mandazi", "url": "https://www.allrecipes.com"},
+        {"name": "Coconut Mandazi", "url": "https://www.allrecipes.com"}
+    ],
+    "chapati": [
+        {"name": "Soft Chapati", "url": "https://www.allrecipes.com"},
+        {"name": "Layered Chapati", "url": "https://www.allrecipes.com"}
+    ],
+    "green grams": [
+        {"name": "Ndengu Stew", "url": "https://www.allrecipes.com"},
+        {"name": "Coconut Ndengu", "url": "https://www.allrecipes.com"}
+    ],
+    "small dried fish": [
+        {"name": "Fried Omena", "url": "https://www.allrecipes.com"},
+        {"name": "Omena Stew", "url": "https://www.allrecipes.com"}
+    ],
+    "plantain": [
+        {"name": "Matoke Stew", "url": "https://www.allrecipes.com"},
+        {"name": "Fried Matoke", "url": "https://www.allrecipes.com"}
+    ],
+    "mashed potatoes with greens": [
+        {"name": "Traditional Mokimo", "url": "https://www.allrecipes.com"},
+        {"name": "Mokimo with Githeri", "url": "https://www.allrecipes.com"}
+    ],
+    "tilapia": [
+        {"name": "Fried Tilapia", "url": "https://www.allrecipes.com"},
+        {"name": "Tilapia Stew", "url": "https://www.allrecipes.com"}
+    ],
+    "beef stew": [
+        {"name": "Kenyan Beef Stew", "url": "https://www.allrecipes.com"},
+        {"name": "Beef Stew with Ugali", "url": "https://www.allrecipes.com"}
+    ],
+    "arrowroot": [
+        {"name": "Boiled Nduma", "url": "https://www.allrecipes.com"},
+        {"name": "Fried Nduma", "url": "https://www.allrecipes.com"}
+    ],
+    "bean stew": [
+        {"name": "Kenyan Bean Stew", "url": "https://www.allrecipes.com"},
+        {"name": "Coconut Bean Stew", "url": "https://www.allrecipes.com"}
+    ],
+    "potato fritters": [
+        {"name": "Bhajia Recipe", "url": "https://www.allrecipes.com"},
+        {"name": "Bhajia with Chutney", "url": "https://www.allrecipes.com"}
+    ],
+    "Kenyan sausage": [
+        {"name": "Mutura Recipe", "url": "https://www.allrecipes.com"},
+        {"name": "Spicy Mutura", "url": "https://www.allrecipes.com"}
+    ],
+    "coconut rice": [
+        {"name": "Kenyan Coconut Rice", "url": "https://www.allrecipes.com"},
+        {"name": "Coconut Rice with Chicken", "url": "https://www.allrecipes.com"}
+    ],
+    
+    # Adding fruits at the end
+    "banana": [
+        {"name": "Banana Bread", "url": "https://www.allrecipes.com"},
+        {"name": "Banana Smoothie", "url": "https://www.allrecipes.com"}
+    ],
+    "mango": [
+        {"name": "Mango Salad", "url": "https://www.allrecipes.com"},
+        {"name": "Mango Chutney", "url": "https://www.allrecipes.com"}
+    ],
+    "avocado": [
+        {"name": "Avocado Salad", "url": "https://www.allrecipes.com"},
+        {"name": "Guacamole", "url": "https://www.allrecipes.com"}
+    ],
+    "papaya": [
+        {"name": "Papaya Salad", "url": "https://www.allrecipes.com"},
+        {"name": "Papaya Smoothie", "url": "https://www.allrecipes.com"}
+    ],
 }
 
 
@@ -109,6 +254,8 @@ def suggest_recipes(food_name):
 
 # Sample nutritional information
 nutritional_info = {
+    'mashed_potato': {"calories": 125, "protein": 3, "carbs": 30, "fat": 2},
+
     'banana': {"calories": 89, "protein": 1.1, "carbs": 23, "fat": 0.3},
     'apple': {"calories": 52, "protein": 0.3, "carbs": 14, "fat": 0.2},
     'chicken': {"calories": 239, "protein": 27, "carbs": 0, "fat": 14},
@@ -123,6 +270,30 @@ nutritional_info = {
     'potato': {"calories": 77, "protein": 2, "carbs": 17, "fat": 0.1},
     'onion': {"calories": 40, "protein": 1.1, "carbs": 9.3, "fat": 0.1},
     'tomato': {"calories": 18, "protein": 0.9, "carbs": 3.9, "fat": 0.2},
+    'ugali': {"calories": 110, "protein": 2.6, "carbs": 25, "fat": 0.5},
+    'collard greens': {"calories": 33, "protein": 2.9, "carbs": 6.1, "fat": 0.7},
+    'githeri': {"calories": 190, "protein": 10, "carbs": 30, "fat": 5},
+    'grilled meat': {"calories": 250, "protein": 20, "carbs": 0, "fat": 15},
+    'mandazi': {"calories": 200, "protein": 4, "carbs": 30, "fat": 8},
+    'chapati': {"calories": 180, "protein": 4, "carbs": 32, "fat": 5},
+    'green grams': {"calories": 105, "protein": 7.1, "carbs": 18.6, "fat": 0.3},
+    'small dried fish': {"calories": 150, "protein": 30, "carbs": 0, "fat": 5},
+    'plantain': {"calories": 90, "protein": 1, "carbs": 23, "fat": 0.1},
+    'mashed potatoes with greens': {"calories": 125, "protein": 3, "carbs": 30, "fat": 2},
+    'tilapia': {"calories": 128, "protein": 26, "carbs": 0, "fat": 2.7},
+    'beef stew': {"calories": 250, "protein": 28, "carbs": 10, "fat": 12},
+    'arrowroot': {"calories": 98, "protein": 2, "carbs": 20, "fat": 0.1},
+    'bean stew': {"calories": 200, "protein": 10, "carbs": 35, "fat": 5},
+    'potato fritters': {"calories": 140, "protein": 4, "carbs": 22, "fat": 6},
+    'Kenyan sausage': {"calories": 280, "protein": 14, "carbs": 5, "fat": 22},
+    'coconut rice': {"calories": 190, "protein": 3, "carbs": 35, "fat": 4},
+    
+    # Adding fruits at the end
+    'banana': {"calories": 90, "protein": 1, "carbs": 23, "fat": 0.3},
+    'mango': {"calories": 60, "protein": 0.8, "carbs": 15, "fat": 0.4},
+    'avocado': {"calories": 160, "protein": 2, "carbs": 9, "fat": 15},
+    'papaya': {"calories": 55, "protein": 0.5, "carbs": 14, "fat": 0.1},
+
 }
 
 def get_nutritional_info(food_name):
@@ -317,6 +488,7 @@ def tips():
         "Share excess food with friends or neighbors."
     ]
     return render_template('tips.html', tips=waste_tips)
+
 @app.route('/predict', methods=['POST'])
 def predict():
     if 'username' not in session:
