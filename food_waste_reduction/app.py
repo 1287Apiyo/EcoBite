@@ -83,7 +83,6 @@ expiration_dates = {
     # Adding fruits at the end
     'mango': {'days': 5, 'cooked_additional': 0},  # No cooking, 5 days fresh
     'pineapple': {'days': 5, 'cooked_additional': 0},  # No cooking, 5 days fresh
-    'avocado': {'days': 4, 'cooked_additional': 0},  # No cooking, 4 days fresh
     'papaya': {'days': 4, 'cooked_additional': 0},  # No cooking, 4 days fresh
     'watermelon': {'days': 7, 'cooked_additional': 0},  # No cooking, 7 days fresh
     'passion fruit': {'days': 7, 'cooked_additional': 0},  # No cooking, 7 days fresh
