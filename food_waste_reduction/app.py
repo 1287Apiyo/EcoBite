@@ -77,7 +77,6 @@ expiration_dates = {
     'pigeon peas': {'days': 4, 'cooked_additional': 2},  # 4 days fresh, 2-3 days cooked
     'cowpeas leaves': {'days': 3, 'cooked_additional': 2},  # 3 days fresh, 2-3 days cooked
     'lamb stew': {'days': 3, 'cooked_additional': 3},  # 3 days fresh, 3-4 days cooked
-    'lentil stew': {'days': 4, 'cooked_additional': 3},  # 4 days fresh, 3-4 days cooked
     'mashed_potato': {'days': 3, 'cooked_additional': 3},  # 3 days fresh, 3-4 days cooked
 
     # Adding fruits at the end
