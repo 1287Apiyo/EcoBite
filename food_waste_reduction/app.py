@@ -28,76 +28,74 @@ def is_food_label(label):
 
 # Sample expiration dates in days
 expiration_dates = {
-    'banana': {'days': 7, 'cooked_additional': 0},  # No cooking, 7 days fresh
-    'apple': {'days': 28, 'cooked_additional': 0},  # No cooking, 28 days fresh
-    'chicken': {'days': 2, 'cooked_additional': 3},  # 2 days raw, 3-4 days cooked
-    'milk': {'days': 7, 'cooked_additional': 0},  # No cooking, 7 days fresh
-    'bread': {'days': 5, 'cooked_additional': 0},  # No cooking, 5 days fresh
-    'egg': {'days': 21, 'cooked_additional': 0},  # No cooking, 21 days fresh
-    'pizza': {'days': 3, 'cooked_additional': 3},  # 3 days fresh, 3-4 days cooked
-    'trifle': {'days': 2, 'cooked_additional': 0},  # No cooking, 2 days fresh
-    'zucchini': {'days': 7, 'cooked_additional': 0},  # No cooking, 7 days fresh
-    'carrot': {'days': 10, 'cooked_additional': 0},  # No cooking, 10 days fresh
-    'grapes': {'days': 5, 'cooked_additional': 0},  # No cooking, 5 days fresh
-    'potato': {'days': 14, 'cooked_additional': 0},  # No cooking, 14 days fresh
-    'onion': {'days': 30, 'cooked_additional': 0},  # No cooking, 30 days fresh
-    'tomato': {'days': 5, 'cooked_additional': 3},  # 5 days fresh, 3-4 days cooked
-    'ugali': {'days': 3, 'cooked_additional': 2},  # 3 days fresh, 2-3 days cooked
-    'collard greens': {'days': 3, 'cooked_additional': 2},  # 3 days fresh, 2-3 days cooked
-    'githeri': {'days': 5, 'cooked_additional': 3},  # 5 days fresh, 3-4 days cooked
-    'grilled meat': {'days': 2, 'cooked_additional': 3},  # 2 days raw, 3-4 days cooked
-    'mandazi': {'days': 3, 'cooked_additional': 2},  # 3 days fresh, 2-3 days cooked
-    'chapati': {'days': 3, 'cooked_additional': 2},  # 3 days fresh, 2-3 days cooked
-    'green grams': {'days': 4, 'cooked_additional': 2},  # 4 days fresh, 2-3 days cooked
-    'small dried fish': {'days': 7, 'cooked_additional': 0},  # No cooking, 7 days fresh
-    'plantain': {'days': 7, 'cooked_additional': 0},  # No cooking, 7 days fresh
-    'mashed potatoes with greens': {'days': 4, 'cooked_additional': 3},  # 4 days fresh, 3-4 days cooked
-    'pilau': {'days': 2, 'cooked_additional': 3},  # 2 days fresh, 3-4 days cooked
-    'tilapia': {'days': 2, 'cooked_additional': 3},  # 2 days raw, 3-4 days cooked
-    'mukimo': {'days': 3, 'cooked_additional': 2},  # 3 days fresh, 2-3 days cooked
-    'beef stew': {'days': 3, 'cooked_additional': 3},  # 3 days fresh, 3-4 days cooked
-    'dry maize flour': {'days': 30, 'cooked_additional': 0},  # No cooking, 30 days fresh
-    'arrowroot': {'days': 5, 'cooked_additional': 0},  # No cooking, 5 days fresh
-    'dry maize': {'days': 30, 'cooked_additional': 0},  # No cooking, 30 days fresh
-    'millet porridge': {'days': 3, 'cooked_additional': 2},  # 3 days fresh, 2-3 days cooked
-    'cassava': {'days': 5, 'cooked_additional': 0},  # No cooking, 5 days fresh
-    'tripe': {'days': 1, 'cooked_additional': 2},  # 1 day raw, 2 days cooked
-    'traditional chicken': {'days': 2, 'cooked_additional': 3},  # 2 days raw, 3-4 days cooked
-    'traditional greens': {'days': 3, 'cooked_additional': 2},  # 3 days fresh, 2-3 days cooked
-    'fish stew': {'days': 2, 'cooked_additional': 3},  # 2 days fresh, 3-4 days cooked
-    'bean stew': {'days': 4, 'cooked_additional': 3},  # 4 days fresh, 3-4 days cooked
-    'millet ugali': {'days': 5, 'cooked_additional': 2},  # 5 days fresh, 2-3 days cooked
-    'arrowroots': {'days': 7, 'cooked_additional': 0},  # No cooking, 7 days fresh
-    'potatoes': {'days': 14, 'cooked_additional': 0},  # No cooking, 14 days fresh
-    'samosa': {'days': 2, 'cooked_additional': 3},  # 2 days fresh, 3-4 days cooked
-    'potato fritters': {'days': 2, 'cooked_additional': 2},  # 2 days fresh, 2-3 days cooked
-    'Kenyan sausage': {'days': 1, 'cooked_additional': 0},  # 1 day fresh
-    'mashed peas and corn': {'days': 3, 'cooked_additional': 3},  # 3 days fresh, 3-4 days cooked
-    'coconut rice': {'days': 2, 'cooked_additional': 3},  # 2 days fresh, 3-4 days cooked
-    'pigeon peas': {'days': 4, 'cooked_additional': 2},  # 4 days fresh, 2-3 days cooked
-    'cowpeas leaves': {'days': 3, 'cooked_additional': 2},  # 3 days fresh, 2-3 days cooked
-    'lamb stew': {'days': 3, 'cooked_additional': 3},  # 3 days fresh, 3-4 days cooked
-    'lentil stew': {'days': 4, 'cooked_additional': 3},  # 4 days fresh, 3-4 days cooked
-    'mashed_potato': {'days': 3, 'cooked_additional': 3},  # 3 days fresh, 3-4 days cooked
-
+    'banana': 7,
+    'apple': 28,
+    'chicken': 2,
+    'milk': 7,
+    'bread': 5,
+    'egg': 21,
+    'pizza': 3,
+    'trifle': 2,
+    'zucchini': 7,
+    'carrot': 10,          # Added carrot
+    'grapes': 5,           # Added grapes
+    'potato': 14,          # Added potato
+    'onion': 30,           # Added onion
+    'tomato': 5,           # Added tomato
+    'ugali': 3,                 # Ugali (cornmeal)
+    'collard greens': 3,        # Sukuma Wiki (collard greens)
+    'githeri': 5,               # Githeri (maize and beans mix)
+    'grilled meat': 2,          # Nyama Choma (grilled meat)
+    'mandazi': 3,               # Mandazi (fried dough)
+    'chapati': 3,               # Chapati (flatbread)
+    'green grams': 4,           # Ndengu (green grams)
+    'small dried fish': 7,      # Omena (small dried fish)
+    'plantain': 7,              # Matoke (green bananas)
+    'mashed potatoes with greens': 4,  # Mokimo (mashed potatoes with greens)
+    'pilau': 2,                 # Pilau (spiced rice and meat)
+    'chicken': 2,               # Kuku (chicken)
+    'tilapia': 2,               # Tilapia fish (fresh)
+    'mukimo': 3,                # Mukimo (mashed peas, potatoes, and greens)
+    'beef stew': 3,             # Beef stew
+    'dry maize flour': 30,      # Ugali mix (dry flour)
+    'arrowroot': 5,             # Nduma (arrowroot)
+    'dry maize': 30,            # Mahindi (dry maize)
+    'millet porridge': 3,       # Wimbi porridge
+    'cassava': 5,               # Muhogo (cassava)
+    'tripe': 1,                 # Matumbo (tripe)
+    'traditional chicken': 2,   # Kienyeji chicken (traditional chicken)
+    'traditional greens': 3,    # Mboga Kienyeji (traditional greens)
+    'fish stew': 2,             # Fish stew
+    'bean stew': 4,             # Bean stew
+    'millet ugali': 5,          # Ugali made from millet flour
+    'arrowroots': 7,            # Nduma (arrowroots)
+    'potatoes': 14,             # Waru (potatoes)
+    'samosa': 2,                # Samosa (fried meat/veg pastry)
+    'potato fritters': 2,       # Bhajia (spiced potato fritters)
+    'Kenyan sausage': 1,        # Mutura (Kenyan sausage)
+    'mashed peas and corn': 3,  # Irio (mashed peas, potatoes, and corn)
+    'coconut rice': 2,          # Coconut rice
+    'pigeon peas': 4,           # Mbaazi (pigeon peas)
+    'cowpeas leaves': 3,        # Kunde (cowpeas leaves)
+    'lamb stew': 3,             # Lamb stew
+    'lentil stew': 4,  
+    'mashed_potato':3,         # Kamande (lentil stew)
+    
     # Adding fruits at the end
-    'mango': {'days': 5, 'cooked_additional': 0},  # No cooking, 5 days fresh
-    'pineapple': {'days': 5, 'cooked_additional': 0},  # No cooking, 5 days fresh
-    'avocado': {'days': 4, 'cooked_additional': 0},  # No cooking, 4 days fresh
-    'papaya': {'days': 4, 'cooked_additional': 0},  # No cooking, 4 days fresh
-    'watermelon': {'days': 7, 'cooked_additional': 0},  # No cooking, 7 days fresh
-    'passion fruit': {'days': 7, 'cooked_additional': 0},  # No cooking, 7 days fresh
-    'guava': {'days': 5, 'cooked_additional': 0},  # No cooking, 5 days fresh
-    'oranges': {'days': 14, 'cooked_additional': 0},  # No cooking, 14 days fresh
-    'lemon': {'days': 30, 'cooked_additional': 0},  # No cooking, 30 days fresh
-    'tangerine': {'days': 14, 'cooked_additional': 0},  # No cooking, 14 days fresh
-    'kiwi': {'days': 10, 'cooked_additional': 0},  # No cooking, 10 days fresh
+    'banana': 7,
+    'apple': 28,
+    'mango': 5,
+    'pineapple': 5,
+    'avocado': 4,
+    'papaya': 4,
+    'watermelon': 7,
+    'passion fruit': 7,
+    'guava': 5,
+    'oranges': 14,
+    'lemon': 30,
+    'tangerine': 14,
+    'kiwi': 10,
 }
-
-# You can access the expiration information as follows:
-banana_info = expiration_dates['banana']
-print(f"Banana: {banana_info['days']} days fresh, {banana_info['cooked_additional']} additional days when cooked.")
-
 
 
 def predict_expiration(food_name):
