@@ -525,7 +525,7 @@ def predict():
             else:
                 raise ValueError("Expiration days is not a valid number")
         except ValueError:
-            pred['expiration'] = 0  # Assign a default value for invalid cases
+            pred['expiration'] = 0 
         
         pred['recipes'] = suggested_recipes
         pred['nutrition'] = nutrition_info
