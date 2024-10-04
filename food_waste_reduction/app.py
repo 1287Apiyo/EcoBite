@@ -538,7 +538,7 @@ def predict():
     # Update session with new predictions
     session['predictions'] = session_predictions
     
-    return jsonify(predictions)  # Return predictions as JSON
+    return jsonify(predictions)  
 
 
 if __name__ == '__main__':
