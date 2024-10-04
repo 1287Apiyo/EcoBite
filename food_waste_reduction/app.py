@@ -531,7 +531,7 @@ def predict():
         pred['nutrition'] = nutrition_info
         
         # Debugging output
-        print(f"Prediction: {pred}")  # Print prediction for debugging
+        print(f"Prediction: {pred}")  
         
         session_predictions.append(pred)
 
