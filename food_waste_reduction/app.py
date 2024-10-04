@@ -518,7 +518,7 @@ def predict():
         suggested_recipes = suggest_recipes(food_name)
         nutrition_info = get_nutritional_info(food_name)
 
-        # Ensure expiration days is stored as an integer
+
         try:
             if isinstance(expiration_days, (int, float)):  # Check if it's a number
                 pred['expiration'] = int(expiration_days)  # Cast to integer
