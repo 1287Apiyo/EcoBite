@@ -520,7 +520,7 @@ def predict():
 
 
         try:
-            if isinstance(expiration_days, (int, float)):  # Check if it's a number
+            if isinstance(expiration_days, (int, float)):  
                 pred['expiration'] = int(expiration_days)  
             else:
                 raise ValueError("Expiration days is not a valid number")
