@@ -498,7 +498,7 @@ def predict():
     img_path = "uploaded_image.jpg"
     img_file.save(img_path)
 
-    # Load and preprocess the image
+
     img = image.load_img(img_path, target_size=(224, 224))
     img_array = image.img_to_array(img)
     img_array = np.expand_dims(img_array, axis=0)
