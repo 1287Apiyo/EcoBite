@@ -1,4 +1,4 @@
- from flask import Flask, render_template, redirect, url_for, flash, request, session, jsonify
+from flask import Flask, render_template, redirect, url_for, flash, request, session, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from keras.applications.mobilenet_v2 import MobileNetV2, preprocess_input
 from keras.preprocessing import image
